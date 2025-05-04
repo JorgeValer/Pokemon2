@@ -6,6 +6,15 @@
     android:padding="16dp"
     android:background="@color/gris_oscuro">
 
+    <Button
+        android:id="@+id/btnFavoritos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver Favoritos"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/azul_principal"
+        android:textColor="@color/blanco"/>
+
     <LinearLayout
         android:id="@+id/layoutSlots"
         android:layout_width="match_parent"
@@ -14,67 +23,17 @@
         android:gravity="center"
         android:layout_marginBottom="16dp">
 
-        <ImageView
-            android:id="@+id/slot1"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
-            android:background="@color/gris_claro"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/slot2"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
-            android:background="@color/gris_claro"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/slot3"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
-            android:background="@color/gris_claro"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/slot4"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
-            android:background="@color/gris_claro"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/slot5"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
-            android:background="@color/gris_claro"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/slot6"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="4dp"
-            android:background="@color/gris_claro"
-            android:scaleType="centerCrop" />
+        <ImageView android:id="@+id/slot1" android:layout_width="48dp" android:layout_height="48dp"/>
+        <ImageView android:id="@+id/slot2" android:layout_width="48dp" android:layout_height="48dp"/>
+        <ImageView android:id="@+id/slot3" android:layout_width="48dp" android:layout_height="48dp"/>
+        <ImageView android:id="@+id/slot4" android:layout_width="48dp" android:layout_height="48dp"/>
+        <ImageView android:id="@+id/slot5" android:layout_width="48dp" android:layout_height="48dp"/>
+        <ImageView android:id="@+id/slot6" android:layout_width="48dp" android:layout_height="48dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPokemon"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/btnGuardarEquipo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Guardar equipo"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/azul_principal"
-        android:textColor="@color/blanco" />
+        android:layout_weight="1"/>
 </LinearLayout>

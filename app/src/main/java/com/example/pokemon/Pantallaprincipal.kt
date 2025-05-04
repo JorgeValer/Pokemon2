@@ -4,15 +4,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class Navbar : AppCompatActivity() {
+class Pantallaprincipal : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navbar)
+        setContentView(R.layout.activity_pantallaprincipal) // ← layout renombrado
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        // Fragmento por defecto: Inicio
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.navbar_fragment_container, InicioFragment())
             .commit()

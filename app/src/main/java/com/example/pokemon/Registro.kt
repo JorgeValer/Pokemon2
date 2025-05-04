@@ -5,71 +5,87 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class Login : Fragment() {
+class Registro : Fragment() {
 
+    private lateinit var tilUsername: TextInputLayout
     private lateinit var tilEmail: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
+    private lateinit var tilConfirmPassword: TextInputLayout
+
+    private lateinit var etUsername: TextInputEditText
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
-    private lateinit var btnLogin: Button
-    private lateinit var tvRegister: TextView
+    private lateinit var etConfirmPassword: TextInputEditText
+
+    private lateinit var btnRegister: Button
+    private lateinit var tvLogin: TextView
     private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
         const val PREF_NAME = "PokemonPrefs"
         const val KEY_IS_LOGGED_IN = "isLoggedIn"
         const val KEY_EMAIL = "email"
+        const val KEY_USERNAME = "username"
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.login, container, false)
+        return inflater.inflate(R.layout.registro, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-        if (sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, false)) {
-            startNavbarActivity()
-            return
-        }
-
+        tilUsername = view.findViewById(R.id.tilUsername)
         tilEmail = view.findViewById(R.id.tilEmail)
         tilPassword = view.findViewById(R.id.tilPassword)
+        tilConfirmPassword = view.findViewById(R.id.tilConfirmPassword)
+
+        etUsername = view.findViewById(R.id.etUsername)
         etEmail = view.findViewById(R.id.etEmail)
         etPassword = view.findViewById(R.id.etPassword)
-        btnLogin = view.findViewById(R.id.btnLogin)
-        tvRegister = view.findViewById(R.id.tvRegister)
+        etConfirmPassword = view.findViewById(R.id.etConfirmPassword)
 
-        btnLogin.setOnClickListener {
-            loginUser()
+        btnRegister = view.findViewById(R.id.btnRegister)
+        tvLogin = view.findViewById(R.id.tvLogin)
+
+        btnRegister.setOnClickListener {
+            registerUser()
         }
 
-        tvRegister.setOnClickListener {
+        tvLogin.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_main, Registro())
+                .replace(R.id.fragment_container_main, Login())
                 .addToBackStack(null)
                 .commit()
         }
     }
 
-    private fun loginUser() {
+    private fun registerUser() {
+        tilUsername.error = null
         tilEmail.error = null
         tilPassword.error = null
+        tilConfirmPassword.error = null
 
+        val username = etUsername.text.toString().trim()
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
+        val confirmPassword = etConfirmPassword.text.toString().trim()
+
         var isValid = true
+
+        if (TextUtils.isEmpty(username)) {
+            tilUsername.error = getString(R.string.error_field_required)
+            isValid = false
+        }
 
         if (TextUtils.isEmpty(email)) {
             tilEmail.error = getString(R.string.error_field_required)
@@ -87,16 +103,30 @@ class Login : Fragment() {
             isValid = false
         }
 
+        if (TextUtils.isEmpty(confirmPassword)) {
+            tilConfirmPassword.error = getString(R.string.error_field_required)
+            isValid = false
+        } else if (password != confirmPassword) {
+            tilConfirmPassword.error = getString(R.string.error_passwords_not_match)
+            isValid = false
+        }
+
         if (isValid) {
-            sharedPreferences.edit()
-                .putBoolean(KEY_IS_LOGGED_IN, true)
-                .putString(KEY_EMAIL, email)
-                .apply()
-            startNavbarActivity()
+            saveUserAndLogin(username, email)
+            Toast.makeText(requireContext(), R.string.registration_successful, Toast.LENGTH_SHORT).show()
+            startNavbar()
         }
     }
 
-    private fun startNavbarActivity() {
+    private fun saveUserAndLogin(username: String, email: String) {
+        sharedPreferences.edit()
+            .putBoolean(KEY_IS_LOGGED_IN, true)
+            .putString(KEY_EMAIL, email)
+            .putString(KEY_USERNAME, username)
+            .apply()
+    }
+
+    private fun startNavbar() {
         val intent = Intent(requireContext(), Pantallaprincipal::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

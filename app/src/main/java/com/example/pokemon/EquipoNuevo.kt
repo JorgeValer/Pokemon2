@@ -1,12 +1,12 @@
 package com.example.pokemon
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,6 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
 
 class EquipoNuevo : Fragment() {
 
@@ -24,8 +23,6 @@ class EquipoNuevo : Fragment() {
 
     private lateinit var slots: List<ImageView>
     private var contadorSlots = 0
-
-    private val seleccionados = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,35 +49,21 @@ class EquipoNuevo : Fragment() {
                 Glide.with(requireContext())
                     .load(pokemon.imagenUrl)
                     .into(slots[contadorSlots])
-                seleccionados.add(pokemon.nombre)
                 contadorSlots++
             }
         }
 
         recyclerView.adapter = adapter
-        cargarPokemons()
 
-        val btnGuardar = view.findViewById<Button>(R.id.btnGuardarEquipo)
-        btnGuardar.setOnClickListener {
-            if (seleccionados.size == 6) {
-                val equipoMap = HashMap<String, String>()
-                for (i in 0 until 6) {
-                    equipoMap["pokemon${i + 1}"] = seleccionados[i]
-                }
-
-                FirebaseFirestore.getInstance().collection("equipos")
-                    .add(equipoMap)
-                    .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Equipo guardado", Toast.LENGTH_SHORT).show()
-                        parentFragmentManager.popBackStack()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(requireContext(), "Error al guardar equipo", Toast.LENGTH_SHORT).show()
-                    }
-            } else {
-                Toast.makeText(requireContext(), "Selecciona 6 Pokémon", Toast.LENGTH_SHORT).show()
-            }
+        val btnFavoritos = view.findViewById<Button>(R.id.btnFavoritos)
+        btnFavoritos.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.navbar_fragment_container, FavoritosFragment())
+                .addToBackStack(null)
+                .commit()
         }
+
+        cargarPokemons()
     }
 
     private fun cargarPokemons() {
@@ -99,7 +82,7 @@ class EquipoNuevo : Fragment() {
                 }
                 adapter.notifyDataSetChanged()
             },
-            { }
+            {}
         )
 
         Volley.newRequestQueue(requireContext()).add(request)
