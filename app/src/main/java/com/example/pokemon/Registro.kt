@@ -1,15 +1,16 @@
 package com.example.pokemon
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Registro : Fragment() {
 
@@ -25,14 +26,9 @@ class Registro : Fragment() {
 
     private lateinit var btnRegister: Button
     private lateinit var tvLogin: TextView
-    private lateinit var sharedPreferences: SharedPreferences
-
-    companion object {
-        const val PREF_NAME = "PokemonPrefs"
-        const val KEY_IS_LOGGED_IN = "isLoggedIn"
-        const val KEY_EMAIL = "email"
-        const val KEY_USERNAME = "username"
-    }
+    private lateinit var progressBar: ProgressBar
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +38,11 @@ class Registro : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPreferences = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Auth and Firestore
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         tilUsername = view.findViewById(R.id.tilUsername)
         tilEmail = view.findViewById(R.id.tilEmail)
@@ -56,16 +56,15 @@ class Registro : Fragment() {
 
         btnRegister = view.findViewById(R.id.btnRegister)
         tvLogin = view.findViewById(R.id.tvLogin)
+        progressBar = view.findViewById(R.id.progressBar)
+        progressBar.visibility = View.GONE
 
         btnRegister.setOnClickListener {
             registerUser()
         }
 
         tvLogin.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_main, Login())
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_registro_to_login)
         }
     }
 
@@ -112,18 +111,37 @@ class Registro : Fragment() {
         }
 
         if (isValid) {
-            saveUserAndLogin(username, email)
-            Toast.makeText(requireContext(), R.string.registration_successful, Toast.LENGTH_SHORT).show()
-            startNavbar()
-        }
-    }
+            progressBar.visibility = View.VISIBLE
 
-    private fun saveUserAndLogin(username: String, email: String) {
-        sharedPreferences.edit()
-            .putBoolean(KEY_IS_LOGGED_IN, true)
-            .putString(KEY_EMAIL, email)
-            .putString(KEY_USERNAME, username)
-            .apply()
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Save additional user information in Firestore
+                        val userId = auth.currentUser?.uid
+                        val userMap = hashMapOf(
+                            "username" to username,
+                            "email" to email
+                        )
+
+                        if (userId != null) {
+                            firestore.collection("users").document(userId)
+                                .set(userMap)
+                                .addOnSuccessListener {
+                                    progressBar.visibility = View.GONE
+                                    Toast.makeText(requireContext(), R.string.registration_successful, Toast.LENGTH_SHORT).show()
+                                    startNavbar()
+                                }
+                                .addOnFailureListener { e ->
+                                    progressBar.visibility = View.GONE
+                                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                    } else {
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(), "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
     }
 
     private fun startNavbar() {

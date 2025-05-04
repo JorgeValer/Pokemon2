@@ -30,7 +30,7 @@ class PokemonAdapter(
         val pokemon = lista[position]
         val context = holder.itemView.context
 
-        holder.nombre.text = pokemon.nombre.capitalize()
+        holder.nombre.text = pokemon.nombre.replaceFirstChar { it.uppercase() }
 
         Glide.with(context)
             .load(pokemon.imagenUrl)
