@@ -2,55 +2,20 @@ package com.example.pokemon
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Pantallaprincipal : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pantallaprincipal) // ← layout renombrado
+        setContentView(R.layout.activity_pantallaprincipal)
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navbar_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
 
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.navbar_fragment_container, InicioFragment())
-            .commit()
-
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_mercado -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.navbar_fragment_container, MercadoFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_equipo -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.navbar_fragment_container, Myteam())
-                        .commit()
-                    true
-                }
-                R.id.nav_inicio -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.navbar_fragment_container, InicioFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_clasificacion -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.navbar_fragment_container, ClasificacionFragment())
-                        .commit()
-                    true
-                }
-                R.id.nav_chat -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.navbar_fragment_container, ChatFragment())
-                        .commit()
-                    true
-                }
-                else -> false
-            }
-        }
+        bottomNav.setupWithNavController(navController)
     }
 }

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -115,10 +116,7 @@ class Login : Fragment() {
             tvRegister.setOnClickListener {
                 Log.d(TAG, "Register text clicked")
                 try {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_main, Registro())
-                        .addToBackStack(null)
-                        .commit()
+                    findNavController().navigate(R.id.action_login_to_registro)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error navigating to register: ${e.message}", e)
                 }
@@ -156,7 +154,6 @@ class Login : Fragment() {
 
             if (isValid) {
                 Log.d(TAG, "Login validation successful, saving preferences")
-                // For testing, just use SharedPreferences instead of Firebase
                 sharedPreferences.edit()
                     .putBoolean(KEY_IS_LOGGED_IN, true)
                     .putString(KEY_EMAIL, email)
