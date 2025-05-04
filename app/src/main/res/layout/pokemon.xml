@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@color/gris_claro"
+    android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:id="@+id/ivImagenPokemon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="12dp"
+        android:background="@color/gris_oscuro" />
+
+    <TextView
+        android:id="@+id/tvNombrePokemon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/gris_oscuro"
+        android:gravity="center_vertical" />
+</LinearLayout>

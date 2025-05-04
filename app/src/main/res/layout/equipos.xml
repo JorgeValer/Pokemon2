@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@color/gris_claro"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/p1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:background="@color/gris_oscuro"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/p2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:background="@color/gris_oscuro"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/p3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:background="@color/gris_oscuro"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/p4"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:background="@color/gris_oscuro"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/p5"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:background="@color/gris_oscuro"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/p6"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:background="@color/gris_oscuro"
+            android:scaleType="centerCrop" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/rojo_combate"
+        android:textColor="@color/blanco" />
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/gris_oscuro">
+
+    <Button
+        android:id="@+id/btnCrearEquipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear equipo"
+        android:backgroundTint="@color/azul_principal"
+        android:textColor="@color/blanco"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerEquipo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

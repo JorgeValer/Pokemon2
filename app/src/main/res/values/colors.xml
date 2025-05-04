@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="blanco">#FFFFFFFF</color>
+    <color name="azul_principal">#0075FF</color>
+    <color name="amarillo_pikachu">#FFCB05</color>
+    <color name="gris_oscuro">#1E1E1E</color>
+    <color name="gris_claro">#F2F2F2</color>
+    <color name="rojo_combate">#D62828</color>
+    <color name="verde_exito">#4CAF50</color>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486431122143",
+    "project_id": "pokemonvgc-30249",
+    "storage_bucket": "pokemonvgc-30249.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486431122143:android:75dd50d4bb699ffa3dbf6a",
+        "android_client_info": {
+          "package_name": "com.example.pokemon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACzCY-44YIAR_0Z11eaToPeiBE1i8s9Q8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/gris_oscuro">
+
+    <ImageView
+        android:id="@+id/imageDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:background="@color/gris_claro" />
+
+    <TextView
+        android:id="@+id/tvNombreDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre del torneo"
+        android:textColor="@color/blanco"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvCiudadDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ciudad"
+        android:textColor="@color/blanco"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btnGuardarEquipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar en equipo"
+        android:backgroundTint="@color/azul_principal"
+        android:textColor="@color/blanco" />
+</LinearLayout>

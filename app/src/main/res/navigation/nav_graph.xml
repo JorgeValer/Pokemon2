@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login">
+
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.pokemon.Login"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.example.pokemon.Home"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_home_to_detail"
+            app:destination="@id/detail" />
+        <action
+            android:id="@+id/action_home_to_myTeam"
+            app:destination="@id/myTeam" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail"
+        android:name="com.example.pokemon.Detail"
+        android:label="Detail" />
+
+    <fragment
+        android:id="@+id/myTeam"
+        android:name="com.example.pokemon.MyTeam"
+        android:label="Mi Equipo" />
+</navigation>
