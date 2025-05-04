@@ -20,7 +20,7 @@ class EquipoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EquipoViewHolder {
         val vista = LayoutInflater.from(parent.context)
-            .inflate(R.layout.mi_equipo, parent, false)
+            .inflate(R.layout.equipos, parent, false)
         return EquipoViewHolder(vista)
     }
 

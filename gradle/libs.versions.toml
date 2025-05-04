@@ -2,7 +2,7 @@
 agp = "8.8.0"
 firebaseBom = "33.13.0"
 glide = "4.15.1"
-kotlin = "1.9.24"
+kotlin = "2.0.0"  # Updated to 2.0.0 to match Firebase dependencies
 coreKtx = "1.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -33,4 +33,3 @@ volley = { module = "com.android.volley:volley", version.ref = "volley" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class home : Fragment() {
+class InicioFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +18,8 @@ class home : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerTorneos)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -32,12 +34,10 @@ class home : Fragment() {
                 putString("nombre", torneo.nombre)
                 putString("ciudad", torneo.ciudad)
             }
-
-            val detailFragment = Detail()
-            detailFragment.arguments = bundle
-
+            val detalle = Detail()
+            detalle.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.navbar_fragment_container, detailFragment)
+                .replace(R.id.navbar_fragment_container, detalle)
                 .addToBackStack(null)
                 .commit()
         }
