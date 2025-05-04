@@ -1,53 +1,66 @@
 package com.example.pokemon
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.pokemon.databinding.ActivityPantallaprincipalBinding
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Pantallaprincipal : AppCompatActivity() {
-
-    private lateinit var binding: ActivityPantallaprincipalBinding
+    private val TAG = "Pantallaprincipal"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPantallaprincipalBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        Log.d(TAG, "onCreate")
 
-        // Load initial fragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.navbar_fragment_container, InicioFragment())
-            .commit()
+        setContentView(R.layout.activity_pantallaprincipal)
 
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            var selectedFragment: Fragment? = null
-
-            when (item.itemId) {
-                R.id.nav_mercado -> {
-                    selectedFragment = MercadoFragment()
-                }
-                R.id.nav_equipo -> {
-                    selectedFragment = Myteam()
-                }
-                R.id.nav_inicio -> {
-                    selectedFragment = InicioFragment()
-                }
-                R.id.nav_clasificacion -> {
-                    selectedFragment = ClasificacionFragment()
-                }
-                R.id.nav_chat -> {
-                    selectedFragment = ChatFragment()
-                }
-            }
-
-            if (selectedFragment != null) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.navbar_fragment_container, selectedFragment)
-                    .commit()
-                true
-            } else {
-                false
-            }
+        // Restaurar estado si existe
+        if (savedInstanceState != null) {
+            Log.d(TAG, "Restoring saved state")
+            // Aquí puedes recuperar datos guardados
         }
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navbar_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        bottomNav.setupWithNavController(navController)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d(TAG, "onSaveInstanceState")
+        super.onSaveInstanceState(outState)
     }
 }

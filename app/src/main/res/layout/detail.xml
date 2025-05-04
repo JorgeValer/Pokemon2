@@ -39,4 +39,12 @@
         android:text="Guardar en equipo"
         android:backgroundTint="@color/azul_principal"
         android:textColor="@color/blanco" />
+    <Button
+        android:id="@+id/btnCompartir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Compartir torneo"
+        android:backgroundTint="@color/verde_exito"
+        android:textColor="@color/blanco" />
 </LinearLayout>
