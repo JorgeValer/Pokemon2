@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_login_to_registro"
             app:destination="@id/registro" />
+        <action
+            android:id="@+id/action_login_to_inicioFragment"
+            app:destination="@id/inicioFragment" />
     </fragment>
 
     <fragment
@@ -25,4 +28,49 @@
             app:destination="@id/login" />
     </fragment>
 
+    <fragment
+        android:id="@+id/inicioFragment"
+        android:name="com.example.pokemon.InicioFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_first" />
+
+    <fragment
+        android:id="@+id/mercadoFragment"
+        android:name="com.example.pokemon.MercadoFragment"
+        android:label="Mercado"
+        tools:layout="@layout/fragment_mercado" />
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.pokemon.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/clasificacionFragment"
+        android:name="com.example.pokemon.ClasificacionFragment"
+        android:label="Clasificación"
+        tools:layout="@layout/fragment_clasificacion" />
+
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.pokemon.FavoritosFragment"
+        android:label="Favoritos"
+        tools:layout="@layout/fragment_favoritos" />
+
+    <fragment
+        android:id="@+id/myteamFragment"
+        android:name="com.example.pokemon.Myteam"
+        android:label="Mi equipo"
+        tools:layout="@layout/mi_equipo">
+        <action
+            android:id="@+id/action_myteam_to_equipoNuevo"
+            app:destination="@id/equipoNuevo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/equipoNuevo"
+        android:name="com.example.pokemon.EquipoNuevo"
+        android:label="Crear equipo"
+        tools:layout="@layout/equipos" />
 </navigation>

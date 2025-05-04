@@ -2,27 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_mercado"
+        android:id="@+id/mercadoFragment"
         android:icon="@drawable/ic_mercado"
         android:title="Mercado" />
 
     <item
-        android:id="@+id/nav_equipo"
+        android:id="@+id/myteamFragment"
         android:icon="@drawable/ic_equipo"
         android:title="Equipo" />
 
     <item
-        android:id="@+id/nav_inicio"
+        android:id="@+id/inicioFragment"
         android:icon="@drawable/ic_inicio"
         android:title="Inicio" />
 
     <item
-        android:id="@+id/nav_clasificacion"
+        android:id="@+id/clasificacionFragment"
         android:icon="@drawable/ic_clasificacion"
         android:title="Clasificación" />
 
     <item
-        android:id="@+id/nav_chat"
+        android:id="@+id/chatFragment"
         android:icon="@drawable/ic_chat"
         android:title="Chat" />
+
 </menu>

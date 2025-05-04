@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class Pantallaprincipal : AppCompatActivity() {
     private val TAG = "Pantallaprincipal"
@@ -16,16 +17,28 @@ class Pantallaprincipal : AppCompatActivity() {
 
         setContentView(R.layout.activity_pantallaprincipal)
 
-        // Restaurar estado si existe
-        if (savedInstanceState != null) {
-            Log.d(TAG, "Restoring saved state")
-            // Aquí puedes recuperar datos guardados
-        }
+        // Crear y añadir NavHostFragment
+        val navHostFragment = NavHostFragment.create(R.navigation.nav_graph)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.navbar_fragment_container, navHostFragment)
+            .setPrimaryNavigationFragment(navHostFragment)
+            .commitNow()
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navbar_fragment_container) as NavHostFragment
+        // Obtener navController y navInflater
         val navController = navHostFragment.navController
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(R.navigation.nav_graph)
 
+        // Establecer destino inicial según usuario logueado
+        val user = FirebaseAuth.getInstance().currentUser
+        val newStart = if (user != null) R.id.inicioFragment else R.id.login
+        graph.setStartDestination(newStart)
+
+        // Aplicar grafo al controlador
+        navController.graph = graph
+
+        // Vincular BottomNavigationView
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.setupWithNavController(navController)
     }
 
