@@ -15,16 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pokemon"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Pokemon">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Pantallaprincipal"
+            android:exported="false" />
 
     </application>
 
