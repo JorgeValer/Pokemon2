@@ -9,29 +9,44 @@
         android:name="com.example.pokemon.Login"
         android:label="Login" >
         <action
-            android:id="@+id/action_login_to_home"
-            app:destination="@id/home" />
+            android:id="@+id/action_login_to_registro"
+            app:destination="@id/registro" />
     </fragment>
 
     <fragment
-        android:id="@+id/home"
-        android:name="com.example.pokemon.Home"
-        android:label="Home" >
+        android:id="@+id/registro"
+        android:name="com.example.pokemon.Registro"
+        android:label="Registro" >
         <action
-            android:id="@+id/action_home_to_detail"
-            app:destination="@id/detail" />
-        <action
-            android:id="@+id/action_home_to_myTeam"
-            app:destination="@id/myTeam" />
+            android:id="@+id/action_registro_to_login"
+            app:destination="@id/login" />
     </fragment>
 
     <fragment
         android:id="@+id/detail"
         android:name="com.example.pokemon.Detail"
-        android:label="Detail" />
+        android:label="Detalle de Torneo" />
 
     <fragment
-        android:id="@+id/myTeam"
-        android:name="com.example.pokemon.MyTeam"
-        android:label="Mi Equipo" />
+        android:id="@+id/myteam"
+        android:name="com.example.pokemon.Myteam"
+        android:label="Mi Equipo">
+        <action
+            android:id="@+id/action_myteam_to_equipoNuevo"
+            app:destination="@id/equipoNuevo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/equipoNuevo"
+        android:name="com.example.pokemon.EquipoNuevo"
+        android:label="Crear Equipo">
+        <action
+            android:id="@+id/action_equipoNuevo_to_favoritosFragment"
+            app:destination="@id/favoritosFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.pokemon.FavoritosFragment"
+        android:label="Favoritos" />
 </navigation>

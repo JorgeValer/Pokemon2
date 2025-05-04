@@ -16,7 +16,7 @@ class Myteam : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EquipoAdapter
     private lateinit var firestore: FirebaseFirestore
-    private val listaEquipos = mutableListOf<EquipoVisual>()
+    private val listaEquipos = mutableListOf<Equipo>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +26,8 @@ class Myteam : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         recyclerView = view.findViewById(R.id.recyclerEquipo)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -51,8 +53,12 @@ class Myteam : Fragment() {
             .addOnSuccessListener { result ->
                 listaEquipos.clear()
                 for (document in result) {
-                    val pokes = (1..6).mapNotNull { document.getString("pokemon$it") }
-                    val equipo = EquipoVisual(pokes, document.id)
+                    val equipo = Equipo(
+                        id = 0,
+                        nombre = document.getString("nombre") ?: "",
+                        ciudad = document.getString("ciudad") ?: "",
+                        idDocumento = document.id
+                    )
                     listaEquipos.add(equipo)
                 }
                 adapter.notifyDataSetChanged()
@@ -62,7 +68,7 @@ class Myteam : Fragment() {
             }
     }
 
-    private fun eliminarEquipo(equipo: EquipoVisual) {
+    private fun eliminarEquipo(equipo: Equipo) {
         firestore.collection("equipos").document(equipo.idDocumento)
             .delete()
             .addOnSuccessListener {

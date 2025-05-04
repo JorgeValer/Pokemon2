@@ -6,4 +6,3 @@ data class Equipo(
     val ciudad: String,
     val idDocumento: String = ""
 )
-
