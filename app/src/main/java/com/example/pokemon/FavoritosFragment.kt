@@ -7,27 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.databinding.FragmentFavoritosBinding
 
 class FavoritosFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: FragmentFavoritosBinding
     private val favoritos = mutableListOf<Pokemon>()
     private lateinit var adapter: PokemonAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_favoritos, container, false)
+    ): View {
+        binding = FragmentFavoritosBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = view.findViewById(R.id.recyclerFavoritos)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerFavoritos.layoutManager = LinearLayoutManager(requireContext())
 
         adapter = PokemonAdapter(favoritos) {}
-        recyclerView.adapter = adapter
+        binding.recyclerFavoritos.adapter = adapter
 
         cargarFavoritos()
     }

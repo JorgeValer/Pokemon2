@@ -2,55 +2,50 @@ package com.example.pokemon
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.pokemon.databinding.PokemonBinding
 
 class PokemonAdapter(
     private val lista: List<Pokemon>,
     private val onItemClick: (Pokemon) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
-    class PokemonViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombre: TextView = view.findViewById(R.id.tvNombrePokemon)
-        val imagen: ImageView = view.findViewById(R.id.ivImagenPokemon)
-        val favorito: ImageView = view.findViewById(R.id.ivFavorito)
-    }
+    class PokemonViewHolder(val binding: PokemonBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pokemon, parent, false)
-        return PokemonViewHolder(view)
+        val binding = PokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PokemonViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val pokemon = lista[position]
         val context = holder.itemView.context
 
-        holder.nombre.text = pokemon.nombre.replaceFirstChar { it.uppercase() }
+        with(holder.binding) {
+            tvNombrePokemon.text = pokemon.nombre.replaceFirstChar { it.uppercase() }
 
-        Glide.with(context)
-            .load(pokemon.imagenUrl)
-            .into(holder.imagen)
+            Glide.with(context)
+                .load(pokemon.imagenUrl)
+                .into(ivImagenPokemon)
 
-        val prefs = context.getSharedPreferences("Favoritos", Context.MODE_PRIVATE)
-        val key = pokemon.nombre
-        val esFavorito = prefs.getBoolean(key, false)
-        holder.favorito.setImageResource(
-            if (esFavorito) R.drawable.ic_star_filled else R.drawable.ic_star_border
-        )
+            val prefs = context.getSharedPreferences("Favoritos", Context.MODE_PRIVATE)
+            val key = pokemon.nombre
+            val esFavorito = prefs.getBoolean(key, false)
+            ivFavorito.setImageResource(
+                if (esFavorito) R.drawable.ic_star_filled else R.drawable.ic_star_border
+            )
 
-        holder.favorito.setOnClickListener {
-            val nuevoEstado = !prefs.getBoolean(key, false)
-            prefs.edit().putBoolean(key, nuevoEstado).apply()
-            notifyItemChanged(position)
-        }
+            ivFavorito.setOnClickListener {
+                val nuevoEstado = !prefs.getBoolean(key, false)
+                prefs.edit().putBoolean(key, nuevoEstado).apply()
+                notifyItemChanged(position)
+            }
 
-        holder.itemView.setOnClickListener {
-            onItemClick(pokemon)
+            root.setOnClickListener {
+                onItemClick(pokemon)
+            }
         }
     }
 

@@ -6,22 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.databinding.HomeBinding
 
 class InicioFragment : Fragment() {
+
+    private lateinit var binding: HomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.home, container, false)
+    ): View {
+        binding = HomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerTorneos)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerTorneos.layoutManager = LinearLayoutManager(requireContext())
 
         val torneos = listOf(
             ModeloTorneo("VGC Regional Madrid", "Madrid"),
@@ -42,6 +44,6 @@ class InicioFragment : Fragment() {
                 .commit()
         }
 
-        recyclerView.adapter = adapter
+        binding.recyclerTorneos.adapter = adapter
     }
 }

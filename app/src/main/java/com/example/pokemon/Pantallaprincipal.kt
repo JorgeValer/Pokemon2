@@ -2,20 +2,52 @@ package com.example.pokemon
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
+import com.example.pokemon.databinding.ActivityPantallaprincipalBinding
 
 class Pantallaprincipal : AppCompatActivity() {
 
+    private lateinit var binding: ActivityPantallaprincipalBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pantallaprincipal)
+        binding = ActivityPantallaprincipalBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navbar_fragment_container) as NavHostFragment
-        val navController = navHostFragment.navController
+        // Load initial fragment
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.navbar_fragment_container, InicioFragment())
+            .commit()
 
-        bottomNav.setupWithNavController(navController)
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            var selectedFragment: Fragment? = null
+
+            when (item.itemId) {
+                R.id.nav_mercado -> {
+                    selectedFragment = MercadoFragment()
+                }
+                R.id.nav_equipo -> {
+                    selectedFragment = Myteam()
+                }
+                R.id.nav_inicio -> {
+                    selectedFragment = InicioFragment()
+                }
+                R.id.nav_clasificacion -> {
+                    selectedFragment = ClasificacionFragment()
+                }
+                R.id.nav_chat -> {
+                    selectedFragment = ChatFragment()
+                }
+            }
+
+            if (selectedFragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.navbar_fragment_container, selectedFragment)
+                    .commit()
+                true
+            } else {
+                false
+            }
+        }
     }
 }

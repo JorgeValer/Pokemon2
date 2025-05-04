@@ -9,21 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.example.pokemon.databinding.LoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class Login : Fragment() {
 
-    private lateinit var tilEmail: TextInputLayout
-    private lateinit var tilPassword: TextInputLayout
-    private lateinit var etEmail: TextInputEditText
-    private lateinit var etPassword: TextInputEditText
-    private lateinit var btnLogin: Button
-    private lateinit var tvRegister: TextView
+    private lateinit var binding: LoginBinding
     private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
@@ -36,19 +29,10 @@ class Login : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Log.d(TAG, "onCreateView called")
-        try {
-            return inflater.inflate(R.layout.login, container, false)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error inflating layout: ${e.message}", e)
-            // Return a simple TextView as fallback
-            return TextView(requireContext()).apply {
-                text = "Error loading UI"
-                textSize = 24f
-                setPadding(50, 50, 50, 50)
-            }
-        }
+        binding = LoginBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,60 +49,23 @@ class Login : Fragment() {
                 return
             }
 
-            // Find views with try/catch to identify which view is causing problems
-            try {
-                tilEmail = view.findViewById(R.id.tilEmail)
-                Log.d(TAG, "Found tilEmail")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding tilEmail: ${e.message}")
-            }
-
-            try {
-                tilPassword = view.findViewById(R.id.tilPassword)
-                Log.d(TAG, "Found tilPassword")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding tilPassword: ${e.message}")
-            }
-
-            try {
-                etEmail = view.findViewById(R.id.etEmail)
-                Log.d(TAG, "Found etEmail")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding etEmail: ${e.message}")
-            }
-
-            try {
-                etPassword = view.findViewById(R.id.etPassword)
-                Log.d(TAG, "Found etPassword")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding etPassword: ${e.message}")
-            }
-
-            try {
-                btnLogin = view.findViewById(R.id.btnLogin)
-                Log.d(TAG, "Found btnLogin")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding btnLogin: ${e.message}")
-            }
-
-            try {
-                tvRegister = view.findViewById(R.id.tvRegister)
-                Log.d(TAG, "Found tvRegister")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding tvRegister: ${e.message}")
-            }
-
-            btnLogin.setOnClickListener {
+            binding.btnLogin.setOnClickListener {
                 Log.d(TAG, "Login button clicked")
                 loginUser()
             }
 
-            tvRegister.setOnClickListener {
+            binding.tvRegister.setOnClickListener {
                 Log.d(TAG, "Register text clicked")
                 try {
+                    // Use Navigation Component to navigate to the registration screen
                     findNavController().navigate(R.id.action_login_to_registro)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error navigating to register: ${e.message}", e)
+                    // As fallback, use the old method if navigation fails
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, Registro())
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         } catch (e: Exception) {
@@ -129,31 +76,32 @@ class Login : Fragment() {
     private fun loginUser() {
         Log.d(TAG, "loginUser called")
         try {
-            tilEmail.error = null
-            tilPassword.error = null
+            binding.tilEmail.error = null
+            binding.tilPassword.error = null
 
-            val email = etEmail.text.toString().trim()
-            val password = etPassword.text.toString().trim()
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
             var isValid = true
 
             if (TextUtils.isEmpty(email)) {
-                tilEmail.error = getString(R.string.error_field_required)
+                binding.tilEmail.error = getString(R.string.error_field_required)
                 isValid = false
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                tilEmail.error = getString(R.string.error_invalid_email)
+                binding.tilEmail.error = getString(R.string.error_invalid_email)
                 isValid = false
             }
 
             if (TextUtils.isEmpty(password)) {
-                tilPassword.error = getString(R.string.error_field_required)
+                binding.tilPassword.error = getString(R.string.error_field_required)
                 isValid = false
             } else if (password.length < 6) {
-                tilPassword.error = getString(R.string.error_short_password)
+                binding.tilPassword.error = getString(R.string.error_short_password)
                 isValid = false
             }
 
             if (isValid) {
                 Log.d(TAG, "Login validation successful, saving preferences")
+                // For testing, just use SharedPreferences instead of Firebase
                 sharedPreferences.edit()
                     .putBoolean(KEY_IS_LOGGED_IN, true)
                     .putString(KEY_EMAIL, email)

@@ -3,37 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@+id/login">
 
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/login"
         android:name="com.example.pokemon.Login"
         android:label="Login"
         tools:layout="@layout/login">
         <action
             android:id="@+id/action_login_to_registro"
-            app:destination="@id/registroFragment" />
+            app:destination="@id/registro" />
         <action
             android:id="@+id/action_login_to_pantallaprincipal"
             app:destination="@id/pantallaPrincipal"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/login"
             app:popUpToInclusive="true" />
     </fragment>
 
 
     <fragment
-        android:id="@+id/registroFragment"
+        android:id="@+id/registro"
         android:name="com.example.pokemon.Registro"
         android:label="Registro"
         tools:layout="@layout/registro">
         <action
             android:id="@+id/action_registro_to_login"
-            app:destination="@id/loginFragment" />
+            app:destination="@+id/login" />
         <action
             android:id="@+id/action_registro_to_pantallaprincipal"
             app:destination="@id/pantallaPrincipal"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@+id/login"
             app:popUpToInclusive="true" />
     </fragment>
 

@@ -1,34 +1,32 @@
 package com.example.pokemon
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.databinding.TorneoBinding
 
 class Torneo(
     private val listaTorneos: List<ModeloTorneo>,
     private val onItemClick: (ModeloTorneo) -> Unit
 ) : RecyclerView.Adapter<Torneo.TorneoViewHolder>() {
 
-    class TorneoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombre: TextView = view.findViewById(R.id.tvNombreTorneo)
-        val ciudad: TextView = view.findViewById(R.id.tvCiudad)
-    }
+    class TorneoViewHolder(val binding: TorneoBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TorneoViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.torneo, parent, false)
-        return TorneoViewHolder(view)
+        val binding = TorneoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TorneoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TorneoViewHolder, position: Int) {
         val torneo = listaTorneos[position]
-        holder.nombre.text = torneo.nombre
-        holder.ciudad.text = torneo.ciudad
 
-        holder.itemView.setOnClickListener {
-            onItemClick(torneo)
+        with(holder.binding) {
+            tvNombreTorneo.text = torneo.nombre
+            tvCiudad.text = torneo.ciudad
+
+            root.setOnClickListener {
+                onItemClick(torneo)
+            }
         }
     }
 

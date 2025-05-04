@@ -1,36 +1,32 @@
 package com.example.pokemon
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.databinding.EquiposBinding
 
 class EquipoAdapter(
     private val listaEquipos: MutableList<Equipo>,
     private val onEliminarClick: (Equipo) -> Unit
 ) : RecyclerView.Adapter<EquipoAdapter.EquipoViewHolder>() {
 
-    class EquipoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombre: TextView = view.findViewById(R.id.tvNombre)
-        val ciudad: TextView = view.findViewById(R.id.tvCiudad)
-        val btnEliminar: Button = view.findViewById(R.id.btnEliminar)
-    }
+    class EquipoViewHolder(val binding: EquiposBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EquipoViewHolder {
-        val vista = LayoutInflater.from(parent.context)
-            .inflate(R.layout.equipos, parent, false)
-        return EquipoViewHolder(vista)
+        val binding = EquiposBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return EquipoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: EquipoViewHolder, position: Int) {
         val equipoActual = listaEquipos[position]
-        holder.nombre.text = equipoActual.nombre
-        holder.ciudad.text = equipoActual.ciudad
 
-        holder.btnEliminar.setOnClickListener {
-            onEliminarClick(equipoActual)
+        with(holder.binding) {
+            tvNombre.text = equipoActual.nombre
+            tvCiudad.text = equipoActual.ciudad
+
+            btnEliminar.setOnClickListener {
+                onEliminarClick(equipoActual)
+            }
         }
     }
 

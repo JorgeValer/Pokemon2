@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.pokemon.databinding.MiEquipoBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Myteam : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: MiEquipoBinding
     private lateinit var adapter: EquipoAdapter
     private lateinit var firestore: FirebaseFirestore
     private val listaEquipos = mutableListOf<Equipo>()
@@ -21,23 +20,23 @@ class Myteam : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.mi_equipo, container, false)
+    ): View {
+        binding = MiEquipoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.recyclerEquipo)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerEquipo.layoutManager = LinearLayoutManager(requireContext())
 
         adapter = EquipoAdapter(listaEquipos) { equipo ->
             eliminarEquipo(equipo)
         }
 
-        recyclerView.adapter = adapter
+        binding.recyclerEquipo.adapter = adapter
 
-        view.findViewById<Button>(R.id.btnCrearEquipo).setOnClickListener {
+        binding.btnCrearEquipo.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.navbar_fragment_container, EquipoNuevo())
                 .addToBackStack(null)
